@@ -46,29 +46,32 @@
   };
 </script>
 
-  <meta name="description" content="把过去丢向黑洞">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我梦见你梦见我">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="this简介this是在运行时进行绑定的，并不是在编写时绑定，它的上下文取决于函数调用时的各种条件。this的绑定和函数声明的位置没有任何关系，只取决于函数的调用方式&#x2F;位置。调用位置就是函数在代码中被调用的位置，而不是声明的位置。使用开发者工具开发者工具得到调用栈call stack（通过设置断点或者插入debugger）,然后找到栈中的第二个元素，就是真正的调用位置。 this提供了一种更优雅的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this">
+<meta property="og:url" content="http://yoursite.com/2019/12/25/this/index.html">
 <meta property="og:site_name" content="我梦见你梦见我">
-<meta property="og:description" content="把过去丢向黑洞">
+<meta property="og:description" content="this简介this是在运行时进行绑定的，并不是在编写时绑定，它的上下文取决于函数调用时的各种条件。this的绑定和函数声明的位置没有任何关系，只取决于函数的调用方式&#x2F;位置。调用位置就是函数在代码中被调用的位置，而不是声明的位置。使用开发者工具开发者工具得到调用栈call stack（通过设置断点或者插入debugger）,然后找到栈中的第二个元素，就是真正的调用位置。 this提供了一种更优雅的">
 <meta property="og:locale" content="cn">
+<meta property="article:published_time" content="2019-12-25T09:10:07.000Z">
+<meta property="article:modified_time" content="2019-12-25T09:27:05.202Z">
 <meta property="article:author" content="FFDoll">
+<meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2019/12/25/this/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false
+    isHome: false,
+    isPost: true
   };
 </script>
 
-  <title>我梦见你梦见我</title>
+  <title>this | 我梦见你梦见我</title>
   
 
 
@@ -173,10 +176,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="cn">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/25/this/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -190,8 +193,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/25/this/" class="post-title-link" itemprop="url">this</a>
+          this
         </h1>
 
         <div class="post-meta">
@@ -216,7 +218,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="this简介"><a href="#this简介" class="headerlink" title="this简介"></a>this简介</h3><p>this是在<strong>运行时</strong>进行<strong>绑定</strong>的，并不是在编写时绑定，它的上下文取决于函数调用时的各种条件。<br>this的绑定和函数声明的位置没有任何关系，只<strong>取决于函数的调用方式/位置</strong>。<br>调用位置就是函数在代码中被调用的位置，而不是声明的位置。<br>使用开发者工具开发者工具得到调用栈call stack（通过设置断点或者插入debugger）,然后找到栈中的第二个元素，就是真正的调用位置。</p>
+        <h3 id="this简介"><a href="#this简介" class="headerlink" title="this简介"></a>this简介</h3><p>this是在<strong>运行时</strong>进行<strong>绑定</strong>的，并不是在编写时绑定，它的上下文取决于函数调用时的各种条件。<br>this的绑定和函数声明的位置没有任何关系，只<strong>取决于函数的调用方式/位置</strong>。<br>调用位置就是函数在代码中被调用的位置，而不是声明的位置。<br>使用开发者工具开发者工具得到调用栈call stack（通过设置断点或者插入debugger）,然后找到栈中的第二个元素，就是真正的调用位置。</p>
 <p>this提供了一种更优雅的方式来“传递”一个对象引用，因此可以将API设计得更加简洁并且易于复用。</p>
 <p>this在任何情况下都不指向函数的词法作用域。<br>在JS内部，作用域确实和对象类似，可见的标识符都是它的属性。<br>但是作用域“对象”无法通过JS代码访问，它存在于JS引擎内部。</p>
 <h3 id="默认绑定"><a href="#默认绑定" class="headerlink" title="默认绑定"></a>默认绑定</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="keyword">this</span>.a )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">foo() <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
@@ -263,94 +265,36 @@
 
 <p>这些函数实际上就是通过<em>call</em>或者<em>apply</em>实现了显式绑定。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="cn">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/25/hello-world/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FFDoll">
-      <meta itemprop="description" content="把过去丢向黑洞">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="我梦见你梦见我">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-25 11:06:03" itemprop="dateCreated datePublished" datetime="2019-12-25T11:06:03+08:00">2019-12-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/25/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -401,6 +345,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#this简介"><span class="nav-number">1.</span> <span class="nav-text">this简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认绑定"><span class="nav-number">2.</span> <span class="nav-text">默认绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式绑定"><span class="nav-number">3.</span> <span class="nav-text">隐式绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显式绑定"><span class="nav-number">4.</span> <span class="nav-text">显式绑定</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
