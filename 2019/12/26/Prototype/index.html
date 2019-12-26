@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Muse',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":true},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="[[Prototype]]JS中的对象有一个特殊的[[Prototype]]内置属性，其实就是对于其他对象的引用。几乎 所有的对象在创建时[[Prototype]]属性都会被赋予一个非空的值。 12345678var anotherObject &#x3D; &amp;#123;    a: 2&amp;#125;&#x2F;&#x2F;把myObject的prototype关联到anotherObjectvar myObject &#x3D; Obj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[[Prototype]]">
+<meta property="og:url" content="http://yoursite.com/2019/12/26/Prototype/index.html">
+<meta property="og:site_name" content="我梦见你梦见我">
+<meta property="og:description" content="[[Prototype]]JS中的对象有一个特殊的[[Prototype]]内置属性，其实就是对于其他对象的引用。几乎 所有的对象在创建时[[Prototype]]属性都会被赋予一个非空的值。 12345678var anotherObject &#x3D; &amp;#123;    a: 2&amp;#125;&#x2F;&#x2F;把myObject的prototype关联到anotherObjectvar myObject &#x3D; Obj">
+<meta property="og:locale" content="cn">
+<meta property="article:published_time" content="2019-12-26T03:34:34.000Z">
+<meta property="article:modified_time" content="2019-12-26T04:18:26.950Z">
+<meta property="article:author" content="FFDoll">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="prototype">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/26/Prototype/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>[[Prototype]] | 我梦见你梦见我</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我梦见你梦见我</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/26/Prototype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FFDoll">
+      <meta itemprop="description" content="把过去丢向黑洞">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我梦见你梦见我">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          [[Prototype]]
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-26 11:34:34 / Modified: 12:18:26" itemprop="dateCreated datePublished" datetime="2019-12-26T11:34:34+08:00">2019-12-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Prototype"><a href="#Prototype" class="headerlink" title="[[Prototype]]"></a>[[Prototype]]</h2><p>JS中的<strong>对象</strong>有一个特殊的[[Prototype]]内置属性，其实就是<strong>对于其他对象的引用</strong>。<br>几乎 所有的对象在创建时[[Prototype]]属性都会被赋予一个非空的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObject = &#123;</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//把myObject的prototype关联到anotherObject</span></span><br><span class="line"><span class="keyword">var</span> myObject = <span class="built_in">Object</span>.create( anotherObject )</span><br><span class="line"></span><br><span class="line">myObject.a <span class="comment">//2</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h3><p>所有普通的[[prototype]]链最终都会指向内置的<em>Object.prototype<em>，有些功能你应该很熟悉了，比如说.</em>toString()<em>和.</em>valueOf()</em>     .<em>hasOwnProperty(..)</em>等等</p>
+<hr>
+<h3 id="给一个对象设置属性的过程"><a href="#给一个对象设置属性的过程" class="headerlink" title="给一个对象设置属性的过程"></a>给一个对象设置属性的过程</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myObject.foo = <span class="string">"bar"</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果myObject对象中包含名为foo的<strong>普通数据访问属性</strong>，这条赋值语句只会<strong>修改已有</strong>的属性值。</p>
+</li>
+<li><p>如果foo不直接存在myObject中，<strong>原型链</strong>就会<strong>被遍历</strong>，类似<strong>[[Get]]</strong>操作。<br>如果<strong>原型链上找不到foo</strong>，foo就会被<strong>直接添加到myObject</strong>上。</p>
+</li>
+<li><p>如果foo<strong>存在于原型链上层</strong>：</p>
+</li>
+</ul>
+<ol>
+<li>如果原型链上层存在名为foo的<strong>普通数据访问属性</strong>并且<em>writable:true</em>，那么就会<strong>直接在myObject中添加</strong>一个名为foo的新属性，它是<strong>屏蔽属性</strong>。</li>
+<li>如果原型链上层存在foo但是为<strong>writable:false</strong>，那么无法修改已有属性或者在myObject上创建屏蔽属性。<strong>如果运行在严格模式下，代码会抛出错误，否则这条赋值语句会被忽略</strong>。<br>只读属性会阻止原型链下层隐式创建同名属性，主要是为了模拟类属性的继承。</li>
+<li>如果在原型链上层存在foo并且它是一个<em>setter</em>，那就一定会调用这个<em>setter</em>。foo不会被添加到myObject，也不会重新定义foo这个<em>setter</em>。</li>
+</ol>
+<p>如果你希望在2、3两种情况下也能创建屏蔽foo，那就不能使用=来赋值，而是使用<br><em>Object.defineProperty(..)</em></p>
+<hr>
+<h3 id="有些情况下会隐式产生屏蔽"><a href="#有些情况下会隐式产生屏蔽" class="headerlink" title="有些情况下会隐式产生屏蔽"></a>有些情况下会隐式产生屏蔽</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> anotherObj = &#123;</span><br><span class="line">    a: <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myObj = <span class="built_in">Object</span>.create( anotherObj )</span><br><span class="line"></span><br><span class="line">anotherObj.a <span class="comment">//2</span></span><br><span class="line">myObj.a <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line">anotherObj.hasOwnProperty(<span class="string">"a"</span>) <span class="comment">//true</span></span><br><span class="line">myObj.hasOwnProperty(<span class="string">"a"</span>) <span class="comment">//false</span></span><br><span class="line"></span><br><span class="line">myObj.a++ <span class="comment">//隐式屏蔽！</span></span><br><span class="line"></span><br><span class="line">anotherObj.a <span class="comment">//2</span></span><br><span class="line">myObj.a <span class="comment">//3</span></span><br><span class="line"></span><br><span class="line">myObj.hasOwnProperty(<span class="string">"a"</span>) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="prototype"><a href="#prototype" class="headerlink" title=".prototype"></a>.prototype</h3><p>在JS中，<strong>对象</strong>直接<strong>定义自己的行为</strong>。<br>所有的函数默认都会拥有一个名为<em>prototype</em>的<strong>公有</strong>并且<strong>不可枚举</strong>的<strong>属性</strong>，它会<strong>指向另一个对象</strong><br>关于这个对象最直接的解释就是通过<strong>调用<em>new Foo()</em>创建的每个对象将最终被原型链链接到这个“<em>Foo.prototype</em>”对象</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype <span class="comment">// &#123; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo()</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.getPrototyeOf( a ) === Foo.prototype <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>JS(默认)并不会复制对象属性，相反它会在两个对象之间<strong>创建一个关联</strong>，这样一个对象就可以通过委托访问另一个对象的属性和函数。</p>
+<hr>
+<h3 id="constructor-NaN"><a href="#constructor-NaN" class="headerlink" title=".constructor"></a>.constructor</h3><p>Foo.prototype默认有一个公有并且不可枚举的属性.constructor。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ..</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.constructor === Foo <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo()</span><br><span class="line"></span><br><span class="line">a.constructor === Foo <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>实际上，Foo和程序中的其他函数没有任何区别。函数本身并不是构造函数。然而当你在普通的函数调用前面加上<em>new</em>关键字之后，就会把这个函数调用变成一个“<strong>构造函数调用</strong>”。实际上，<em>new</em>会劫持所有普通函数并用构造对象的形式来调用它。<br>换句话说，在JS中对于“<strong>构造函数</strong>”最准确的解释是，<strong>所有带new的函数调用</strong>。<br><strong>函数不是构造函数，但是当且仅当使用new时，函数调用会变成“构造函数调用”</strong>。</p>
+<p><em>a.constructor</em>只是通过默认的原型链委托指向Foo。</p>
+<p><em>Foo.prototype</em>的.<em>constructor</em>属性只是Foo函数在声明时的默认属性。如果你创建了一个新对象并替换了函数默认的.<em>prototype</em>对象引用，那么新对象并不会自动获得.<em>constructor</em>属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;...&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype = &#123; ... &#125; <span class="comment">//创建一个新原型对象</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo()</span><br><span class="line"></span><br><span class="line">a.constructor === Foo <span class="comment">// false</span></span><br><span class="line">a.constructor === <span class="built_in">Object</span> <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p>最好的方法是记住——<strong>constructor并不表示（对象）被（它）构造</strong>。<br><em>a.constructor</em>是一个非常不可靠并且不安全的引用，通常来说要尽量避免使用这些引用。</p>
+<hr>
+<h3 id="Object-create"><a href="#Object-create" class="headerlink" title="Object.create(..)"></a>Object.create(..)</h3><p>创建一个新对象并<strong>把新对象内部的原型关联到你指定的对象</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个新的Bar.prototype对象并关联到Foo.prototype</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create( Foo.prototype )</span><br></pre></td></tr></table></figure>
+
+
+<p>注意下面两种错误方式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bar.prototype = Foo.prototype</span><br></pre></td></tr></table></figure>
+<p>并不会创建一个关联到Foo.prototype的新对象，只是让Bar.prototype直接引用Foo.prototype对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bar.prototype = <span class="keyword">new</span> Foo()</span><br></pre></td></tr></table></figure>
+<p>的确会创建一个关联到Foo.prototype的新对象，但是它使用了Foo()的“构造函数调用”，如果函数Foo有一些副作用，比如写日志、修改状态、注册到其他对象、给this添加数据属性等等，就会影响到Bar()的“后代”，后果不堪设想。</p>
+<hr>
+<h3 id="Object-setPrototypeOf"><a href="#Object-setPrototypeOf" class="headerlink" title="Object.setPrototypeOf(..)"></a>Object.setPrototypeOf(..)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES6之前需要抛弃默认的Bar.prototype来关联到Foo.prototype</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create( Foo.prototype )</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6开始可以直接修改现有的Bar.prototype来关联到Foo.prototype</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf( Bar.prototype, Foo.prototype )</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+<h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.blah = ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo()</span><br><span class="line"></span><br><span class="line">a <span class="keyword">instanceof</span> Foo <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+
+<p><em>instanceof</em>的含义是：在a的整条原型链中是否有<em>Foo.prototype</em>指向的对象。<br>这个方法只能处理<strong>对象</strong>和<strong>函数</strong>之间的关系，如果你想判断两个对象之间是否通过原型链关联，只用<em>instanceof</em>无法实现。</p>
+<hr>
+<h3 id="isPrototypeOf-NaN"><a href="#isPrototypeOf-NaN" class="headerlink" title=".isPrototypeOf"></a>.isPrototypeOf</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b是否出现在c的原型链中</span></span><br><span class="line">b.isPrototypeOf( c )</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="Prototype-机制的意义"><a href="#Prototype-机制的意义" class="headerlink" title="[[Prototype]]机制的意义"></a>[[Prototype]]机制的意义</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">    something: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Tell me something good..."</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="built_in">Object</span>.create( foo )</span><br><span class="line"></span><br><span class="line">bar.something() <span class="comment">//Tell me something good...</span></span><br></pre></td></tr></table></figure>
+
+<p><em>Object.create(..)</em>创建一个新对象bar并把它关联到我们指定的对象，这样可以充分发挥原型机制的委托威力并且避免不必要的麻烦（比如使用new的构造函数调用会生成.prototype和.constructor引用）</p>
+<hr>
+<h3 id="Object-create-null"><a href="#Object-create-null" class="headerlink" title="Object.create(null)"></a>Object.create(null)</h3><p>创建一个没有原型链的对象，所以instanceof无法进行判断，总是会返回false。<br>这些特殊的空原型对象通常被称作“字典”，它们完全不会受到原型链的干扰，因此非常适合用来存储数据。</p>
+<hr>
+<h3 id="将原型作为默认值"><a href="#将原型作为默认值" class="headerlink" title="将原型作为默认值"></a>将原型作为默认值</h3><p><em>Function.prototype</em>是一个空函数<br><em>RegExp.prototype</em>是一个“空”的正则表达式（无任何匹配）<br><em>Array.prototype</em>是一个空数组<br>对未赋值的变量来说，它们是很好的默认值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isThisCool</span>(<span class="params">vals, fn, rx</span>) </span>&#123;</span><br><span class="line">    vals = vals || <span class="built_in">Array</span>.prototype</span><br><span class="line">    fn = fn || <span class="built_in">Function</span>.prototype</span><br><span class="line">    rx = rx || <span class="built_in">RegExp</span>.prototype</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> rx.text(</span><br><span class="line">        val.map( fn ).join(<span class="string">""</span>)</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">isThisCool()   <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line">isThisCool([<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>], </span><br><span class="line">            <span class="function"><span class="keyword">function</span>(<span class="params">v</span>) </span>&#123; <span class="keyword">return</span> v.toUpperCase() &#125;,</span><br><span class="line">            /D/</span><br><span class="line">)    <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>从<strong>ES6</strong>开始，不再需要上述方法来设置默认值，因为默认值可以通过函数声明中的内置语法来设置。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">log</span>(<span class="params">x, y=<span class="string">'world'</span></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x, y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+              <a href="/tags/prototype/" rel="tag"># prototype</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/25/this/" rel="prev" title="this">
+      <i class="fa fa-chevron-left"></i> this
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/26/%E4%B8%80%E6%AD%A5%E4%B9%8B%E9%81%A5/" rel="next" title="一步之遥">
+      一步之遥 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype"><span class="nav-number">1.</span> <span class="nav-text">[[Prototype]]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-prototype"><span class="nav-number">1.1.</span> <span class="nav-text">Object.prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给一个对象设置属性的过程"><span class="nav-number">1.2.</span> <span class="nav-text">给一个对象设置属性的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有些情况下会隐式产生屏蔽"><span class="nav-number">1.3.</span> <span class="nav-text">有些情况下会隐式产生屏蔽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prototype"><span class="nav-number">1.4.</span> <span class="nav-text">.prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor-NaN"><span class="nav-number">1.5.</span> <span class="nav-text">.constructor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-create"><span class="nav-number">1.6.</span> <span class="nav-text">Object.create(..)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-setPrototypeOf"><span class="nav-number">1.7.</span> <span class="nav-text">Object.setPrototypeOf(..)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#instanceof"><span class="nav-number">1.8.</span> <span class="nav-text">instanceof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#isPrototypeOf-NaN"><span class="nav-number">1.9.</span> <span class="nav-text">.isPrototypeOf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prototype-机制的意义"><span class="nav-number">1.10.</span> <span class="nav-text">[[Prototype]]机制的意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-create-null"><span class="nav-number">1.11.</span> <span class="nav-text">Object.create(null)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将原型作为默认值"><span class="nav-number">1.12.</span> <span class="nav-text">将原型作为默认值</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FFDoll</p>
+  <div class="site-description" itemprop="description">把过去丢向黑洞</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FFDoll</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.6.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
