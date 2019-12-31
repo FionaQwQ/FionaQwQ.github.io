@@ -54,7 +54,7 @@
 <meta property="og:description" content="[[Prototype]]JS中的对象有一个特殊的[[Prototype]]内置属性，其实就是对于其他对象的引用。几乎 所有的对象在创建时[[Prototype]]属性都会被赋予一个非空的值。 12345678var anotherObject &#x3D; &amp;#123;    a: 2&amp;#125;&#x2F;&#x2F;把myObject的prototype关联到anotherObjectvar myObject &#x3D; Obj">
 <meta property="og:locale" content="cn">
 <meta property="article:published_time" content="2019-12-26T03:34:34.000Z">
-<meta property="article:modified_time" content="2019-12-26T04:18:26.950Z">
+<meta property="article:modified_time" content="2019-12-29T04:34:52.062Z">
 <meta property="article:author" content="FFDoll">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="prototype">
@@ -203,10 +203,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-12-26 11:34:34 / Modified: 12:18:26" itemprop="dateCreated datePublished" datetime="2019-12-26T11:34:34+08:00">2019-12-26</time>
+              <time title="Created: 2019-12-26 11:34:34" itemprop="dateCreated datePublished" datetime="2019-12-26T11:34:34+08:00">2019-12-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-29 12:34:52" itemprop="dateModified" datetime="2019-12-29T12:34:52+08:00">2019-12-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -282,7 +288,6 @@
 <p>的确会创建一个关联到Foo.prototype的新对象，但是它使用了Foo()的“构造函数调用”，如果函数Foo有一些副作用，比如写日志、修改状态、注册到其他对象、给this添加数据属性等等，就会影响到Bar()的“后代”，后果不堪设想。</p>
 <hr>
 <h3 id="Object-setPrototypeOf"><a href="#Object-setPrototypeOf" class="headerlink" title="Object.setPrototypeOf(..)"></a>Object.setPrototypeOf(..)</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES6之前需要抛弃默认的Bar.prototype来关联到Foo.prototype</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create( Foo.prototype )</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6开始可以直接修改现有的Bar.prototype来关联到Foo.prototype</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf( Bar.prototype, Foo.prototype )</span><br></pre></td></tr></table></figure>
-
 
 <hr>
 <h3 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.blah = ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo()</span><br><span class="line"></span><br><span class="line">a <span class="keyword">instanceof</span> Foo <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
@@ -399,20 +404,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
