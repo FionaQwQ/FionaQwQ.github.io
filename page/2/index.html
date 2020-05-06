@@ -177,6 +177,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="cn">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/27/BFC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FFDoll">
+      <meta itemprop="description" content="把过去丢向黑洞">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我梦见你梦见我">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/27/BFC/" class="post-title-link" itemprop="url">BFC</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-27 14:26:17 / Modified: 14:39:15" itemprop="dateCreated datePublished" datetime="2019-12-27T14:26:17+08:00">2019-12-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="BFC定义"><a href="#BFC定义" class="headerlink" title="BFC定义"></a>BFC定义</h3><p><strong>block formatting context</strong>，块级格式化上下文</p>
+<h3 id="BFC特性"><a href="#BFC特性" class="headerlink" title="BFC特性"></a>BFC特性</h3><p>BFC可以使一个元素像一个<strong>围城</strong>，里面的人出不去，外面的人进不来。<br>如果一个元素具有BFC，内部子元素无论如何都不会影响到外部的元素。<br>所以——</p>
+<ul>
+<li>BFC不可能发生margin重叠</li>
+<li>BFC可以用来清除浮动带来的影响（因为如果清除不了，子元素浮动使父元素高度塌陷，会影响其后元素布局与定位，显然有违BFC元素的子元素不会影响外部元素的设定）<br>当然这些并不是BFC特性最终目标，BFC最重要的用途是实现<strong>更健壮、更智能的自适应布局</strong>。</li>
+</ul>
+<h3 id="BFC触发条件"><a href="#BFC触发条件" class="headerlink" title="BFC触发条件"></a>BFC触发条件</h3><ul>
+<li>&lt;html&gt;根元素</li>
+<li>float的值不为none</li>
+<li>overflow的值为auto\scroll\hidden</li>
+<li>display的值为table-cell\table-caption\inline-block</li>
+<li>position的值不为relative\static</li>
+</ul>
+<p>只要符合其上所列任意一个条件，就无须使用clear: both属性去清除浮动的影响了</p>
+<h3 id="BFC与流体布局"><a href="#BFC与流体布局" class="headerlink" title="BFC与流体布局"></a>BFC与流体布局</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"parent"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"./WechatIMG8.jpeg"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"text"</span>&gt;</span>我，梦，见，你，也，梦，见，我，告，诉，我，思，念，的，寂，寞<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="css">        <span class="selector-class">.parent</span> &#123;</span></span><br><span class="line">            width: 150px;</span><br><span class="line">        &#125;</span><br><span class="line">        img &#123;</span><br><span class="line">            width: 60px;</span><br><span class="line">            float: left;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>.text的内容受到设置了float属性值的图片的影响而环绕图片，此时给.text设置具有BFC特性的属性，比如<em>overflow: hidden</em>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.text</span> &#123;</span><br><span class="line">            <span class="attribute">overflow</span>: hidden;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>由于具有BFC特性的元素的子元素不会受外部元素影响，也不会影响外部元素。所以这里.text元素为了不和浮动元素产生任何交集，顺着浮动边缘形成自己的封闭上下文。<br>即普通流体元素在设置了BFC特性属性后，会自动填满容器中除了浮动元素以外的剩余空间，形成自适应布局效果。我们让图片的尺寸变大或变小，右侧自适应内容无须更改任何样式代码，都可以自动填满剩余的空间。</p>
+<p>如果想令图片和文字保持合适的间距，则该例中</p>
+<ul>
+<li><p>图片可以设置以下任意一条：<br>img { margin-right: 10px; }<br>img { border-right: 10px solid transparent; }<br>img { padding-right: 10px; }</p>
+</li>
+<li><p>或者.text可以设置以下任意一条：<br>.text { boder-left: 10px solid transparent; }<br>.text { padding-left: 10px; }</p>
+</li>
+</ul>
+<p>注意，不包括.text { margin-left: 10px; }，因为其值必须是浮动元素的宽度加间隙的大小，所以会变成动态不可控的，无法大规模复用</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="cn">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/26/webpack/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -994,7 +1092,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
